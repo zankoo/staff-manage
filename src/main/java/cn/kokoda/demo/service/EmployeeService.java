@@ -21,4 +21,8 @@ public class EmployeeService {
     public boolean addEmployee(Employee employee) {
         return employeeMapper.insert(employee) == 1;
     }
+
+    public boolean editEmployee(Employee employee) {
+        return employeeMapper.updateByPrimaryKeySelective(employee) == 1;
+    }
 }

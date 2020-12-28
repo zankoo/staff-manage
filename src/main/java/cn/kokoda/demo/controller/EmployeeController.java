@@ -47,9 +47,12 @@ public class EmployeeController {
         }
     }
 
-    @RequestMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
-        System.out.println("id = " + id);
-        return "redirect:/emp/table";
+    @RequestMapping("/editEmployee")
+    public String edit(Employee employee, Model model) {
+        if (employeeService.editEmployee(employee)) {
+            return "redirect:/emp/table";
+        } else {
+            return "error/404";
+        }
     }
 }

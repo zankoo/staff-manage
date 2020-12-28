@@ -74,8 +74,8 @@
                         <label class="col-sm-4 col-form-label" for="inputGender">性别</label>
                         <div class="col-sm-4">
                             <select class="form-control" name="gender" id="inputGender">
-                                <option th:text="男" th:value="1"></option>
-                                <option th:text="女" th:value="0"></option>
+                                <option th:text="女" value="0"></option>
+                                <option th:text="男" value="1"></option>
                             </select>
                         </div>
                     </div>
@@ -113,6 +113,77 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editModalLabel">修改信息</h4>
+            </div>
+            <form th:action="@{/emp/editEmployee}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" id="editId" name="id" value="">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editName">姓名</label>
+                        <div class="col-sm-8">
+                            <input name="name" id="editName" type="text" class="form-control" placeholder="请输入员工姓名">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editEmail">邮箱</label>
+                        <div class="col-sm-8">
+                            <input name="email" id="editEmail" class="form-control" placeholder="请输入员工邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editGender">性别</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="gender" id="editGender">
+                                <option th:text="女" value="0"></option>
+                                <option th:text="男" value="1"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editDepartment">部门</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="departId" id="editDepartment">
+                                <option th:each="department:${departments}"
+                                        th:text="${department.getName()}"
+                                        th:value="${department.getId()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editBirthday">生日</label>
+                        <div class="col-sm-6">
+                            <input name="birthday" id="editBirthday" type="date" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editSalary">每月工资</label>
+                        <div class="col-sm-8">
+                            <input name="salary" id="editSalary" type="text" class="form-control"
+                                   placeholder="请输入员工每月工资">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editBonus">年终奖</label>
+                        <div class="col-sm-8">
+                            <input name="bonus" id="editBonus" type="text" class="form-control" placeholder="请输入员工年终奖">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">修改</button>
                 </div>
             </form>
         </div>
@@ -158,7 +229,9 @@
                         <td th:text="${emp.getBonus()}"></td>
                         <td th:text="${departmentsMap.get(emp.getDepartId()).getName()}"></td>
                         <td>
-                            <button class="btn btn-sm btn-primary" th:href="@{/emp/deit/}+${emp.getId()}">编辑
+                            <button class="btn btn-sm btn-primary"
+                                    data-toggle="modal" data-target="#editModal"
+                                    th:onclick="Values([[${emp}]])">编辑
                             </button>
                             <button class="btn btn-sm btn-danger">删除</button>
                         </td>
@@ -176,7 +249,20 @@
 <script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-
+<script>
+    function Values(employee) {
+        console.log(employee);
+        let date = employee.birthday.split('T')
+        $("#editId").val(employee.id);
+        $("#editName").val(employee.name);
+        $("#editEmail").val(employee.email);
+        $("#editGender").val(employee.gender ? '1' : '0');
+        $("#editDepartment").val(employee.departId);
+        $("#editBirthday").val(date[0]);
+        $("#editSalary").val(employee.salary);
+        $("#editBonus").val(employee.bonus);
+    }
+</script>
 </body>
 
 </html>
