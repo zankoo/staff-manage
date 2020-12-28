@@ -1,26 +1,21 @@
 package cn.kokoda.demo.controller;
 
 import cn.kokoda.demo.pojo.Department;
-import cn.kokoda.demo.pojo.Employee;
 import cn.kokoda.demo.pojo.User;
 import cn.kokoda.demo.service.DepartmentService;
-import cn.kokoda.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @Controller
-@RequestMapping("/emp")
-public class EmployeeController {
-
-    @Autowired
-    EmployeeService employeeService;
+@RequestMapping("/dept")
+public class DepartmentController {
 
     @Autowired
     DepartmentService departmentService;
@@ -28,37 +23,34 @@ public class EmployeeController {
     @RequestMapping("/table")
     public String list(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
-        List<Employee> allEmployee = employeeService.getAllEmployee(user.getId());
-        Map<Integer, Department> allDepartmentMap = departmentService.getAllDepartmentMap(user.getId());
         List<Department> allDepartment = departmentService.getAllDepartment(user.getId());
+        System.out.println("allDepartment = " + allDepartment);
         model.addAttribute("departments", allDepartment);
-        model.addAttribute("departmentsMap", allDepartmentMap);
-        model.addAttribute("employees", allEmployee);
-        return "table";
+        return "department";
     }
 
-    @RequestMapping("/addEmployee")
-    public String add(Employee employee) {
-        if (employeeService.addEmployee(employee)) {
-            return "redirect:/emp/table";
+    @RequestMapping("/addDepartment")
+    public String add(Department department) {
+        if (departmentService.addDepartment(department)) {
+            return "redirect:/dept/table";
         } else {
             return "error/404";
         }
     }
 
-    @RequestMapping("/editEmployee")
-    public String edit(Employee employee) {
-        if (employeeService.editEmployee(employee)) {
-            return "redirect:/emp/table";
+    @RequestMapping("/editDepartment")
+    public String edit(Department department) {
+        if (departmentService.editDepartment(department)) {
+            return "redirect:/dept/table";
         } else {
             return "error/404";
         }
     }
 
-    @RequestMapping("/deleteEmployee/{id}")
+    @RequestMapping("/deleteDepartment/{id}")
     public String delete(@PathVariable("id") int id) {
-        if (employeeService.deleteEmployee(id)) {
-            return "redirect:/emp/table";
+        if (departmentService.deleteDepartment(id)) {
+            return "redirect:/dept/table";
         } else {
             return "error/404";
         }

@@ -25,4 +25,8 @@ public class EmployeeService {
     public boolean editEmployee(Employee employee) {
         return employeeMapper.updateByPrimaryKeySelective(employee) == 1;
     }
+
+    public boolean deleteEmployee(int id) {
+        return employeeMapper.deleteByPrimaryKey(id) == 1;
+    }
 }

@@ -16,13 +16,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("login");
         registry.addViewController("/reg").setViewName("register");
         registry.addViewController("/main").setViewName("dashboard");
-//        registry.addViewController("/table").setViewName("table");
         registry.addViewController("/reward").setViewName("reward");
         registry.addViewController("/attendance").setViewName("attendance");
-        registry.addViewController("/department").setViewName("department");
         registry.addViewController("/404").setViewName("error/404");
     }
 

@@ -190,6 +190,7 @@
     </div>
 </div>
 
+
 <body>
 <div th:replace="~{components::navbar}"></div>
 
@@ -200,7 +201,7 @@
             <h2>员工列表</h2>
             <div style="margin-bottom: 10px">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">
                     添加员工
                 </button>
             </div>
@@ -233,7 +234,8 @@
                                     data-toggle="modal" data-target="#editModal"
                                     th:onclick="Values([[${emp}]])">编辑
                             </button>
-                            <button class="btn btn-sm btn-danger">删除</button>
+                            <a class="btn btn-sm btn-danger"
+                               th:href="@{/emp/deleteEmployee/{id}(id=${emp.getId()})}">删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -251,7 +253,6 @@
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <script>
     function Values(employee) {
-        console.log(employee);
         let date = employee.birthday.split('T')
         $("#editId").val(employee.id);
         $("#editName").val(employee.name);

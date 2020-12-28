@@ -22,4 +22,16 @@ public class DepartmentService {
     public List<Department> getAllDepartment(int userId) {
         return departmentMapper.selectAllByUserId(userId);
     }
+
+    public boolean addDepartment(Department department) {
+        return departmentMapper.insert(department) == 1;
+    }
+
+    public boolean editDepartment(Department department) {
+        return departmentMapper.updateByPrimaryKeySelective(department) == 1;
+    }
+
+    public boolean deleteDepartment(int id) {
+        return departmentMapper.deleteByPrimaryKey(id) == 1;
+    }
 }

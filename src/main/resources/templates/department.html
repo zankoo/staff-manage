@@ -48,6 +48,58 @@
     </style>
 </head>
 
+<div class="modal fade" id="departmentModal" tabindex="-1" role="dialog" aria-labelledby="departmentModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="departmentModalLabel">添加部门</h4>
+            </div>
+            <form th:action="@{/dept/addDepartment}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" name="userId" th:value="${session.loginUser.getId()}">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="departmentName">部门名称</label>
+                        <div class="col-sm-8">
+                            <input name="name" id="departmentName" type="text" class="form-control"
+                                   placeholder="请输入部门名称">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editModalLabel">修改部门</h4>
+            </div>
+            <form th:action="@{/dept/editDepartment}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" id="editId" name="id" value="">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editDepartmentName">部门名称</label>
+                        <div class="col-sm-8">
+                            <input name="name" id="editDepartmentName" type="text" class="form-control"
+                                   placeholder="请输入部门名称">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <body>
 <div th:replace="~{components::navbar}"></div>
 
@@ -55,7 +107,37 @@
     <div class="row">
         <div th:replace="~{components::sidebar(active = ${'department'})}"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            #todo
+            <h2>部门列表</h2>
+            <div style="margin-bottom: 10px">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#departmentModal">
+                    添加部门
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">部门名称</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-sm">
+                    <tr th:each="dept:${departments}">
+                        <th scope="row" th:text="${dept.getName()}"></th>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                    data-toggle="modal" data-target="#editModal"
+                                    th:onclick="Values([[${dept}]])">
+                                编辑
+                            </button>
+                            <a class="btn btn-sm btn-danger"
+                               th:href="@{/dept/deleteDepartment/{id}(id=${dept.getId()})}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
 </div>
@@ -66,45 +148,12 @@
 <script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
 <script>
-    feather.replace()
+    function Values(dept) {
+        $("#editDepartmentName").val(dept.name);
+        $("#editId").val(dept.id);
+    }
 </script>
-
-<!-- Graphs -->
-<script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
-
 
 </body>
 
