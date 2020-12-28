@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: Zhuqi771201
-    url: jdbc:mysql://localhost:3306/staff-manage?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/staff-manage?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -23,6 +23,9 @@ spring:
       connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   thymeleaf:
     cache: false
+  mvc:
+    format:
+      date: yyyy-MM-dd
 
 mybatis:
   type-aliases-package: cn.kokoda.demo.pojo

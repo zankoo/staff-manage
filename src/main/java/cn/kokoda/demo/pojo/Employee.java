@@ -12,15 +12,21 @@ import lombok.NoArgsConstructor;
 public class Employee implements Serializable {
     private Integer id;
 
-    private String name;
+    private Integer userId;
 
     private String email;
 
     private Boolean gender;
 
+    private Date birthday;
+
+    private Integer salary;
+
+    private Integer bonus;
+
     private Integer departId;
 
-    private Date birthday;
+    private String name;
 
     private static final long serialVersionUID = 1L;
 }

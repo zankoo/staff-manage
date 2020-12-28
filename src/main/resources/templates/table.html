@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>首页</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">添加员工</h4>
+            </div>
+            <form th:action="@{/emp/addEmployee}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" name="userId" th:value="${session.loginUser.getId()}">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputName">姓名</label>
+                        <div class="col-sm-8">
+                            <input name="name" id="inputName" type="text" class="form-control" placeholder="请输入员工姓名">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputEmail">邮箱</label>
+                        <div class="col-sm-8">
+                            <input name="email" id="inputEmail" class="form-control" placeholder="请输入员工邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputGender">性别</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="gender" id="inputGender">
+                                <option th:text="男" th:value="1"></option>
+                                <option th:text="女" th:value="0"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputDepartment">部门</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="departId" id="inputDepartment">
+                                <option th:each="department:${departments}"
+                                        th:text="${department.getName()}"
+                                        th:value="${department.getId()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputBirthday">生日</label>
+                        <div class="col-sm-6">
+                            <input name="birthday" id="inputBirthday" type="date" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputSalary">每月工资</label>
+                        <div class="col-sm-8">
+                            <input name="salary" id="inputSalary" type="text" class="form-control"
+                                   placeholder="请输入员工每月工资">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputBonus">年终奖</label>
+                        <div class="col-sm-8">
+                            <input name="bonus" id="inputBonus" type="text" class="form-control" placeholder="请输入员工年终奖">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<body>
+<div th:replace="~{components::navbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{components::sidebar(active=${'table'})}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2>员工列表</h2>
+            <div style="margin-bottom: 10px">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                    添加员工
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">姓名</th>
+                        <th scope="col">邮箱</th>
+                        <th scope="col">性别</th>
+                        <th scope="col">生日</th>
+                        <th scope="col">每月工资</th>
+                        <th scope="col">年终奖</th>
+                        <th scope="col">部门</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-sm">
+                    <tr th:each="emp:${employees}">
+                        <th scope="row" th:text="${emp.getName()}"></th>
+                        <td th:text="${emp.getEmail()}"></td>
+                        <td th:text="${emp.getGender()?'男':'女'}"></td>
+                        <td th:text="${#dates.format(emp.getBirthday(),'yyyy-MM-dd')}"></td>
+                        <td th:text="${emp.getSalary()}"></td>
+                        <td th:text="${emp.getBonus()}"></td>
+                        <td th:text="${departmentsMap.get(emp.getDepartId()).getName()}"></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" th:href="@{/emp/deit/}+${emp.getId()}">编辑
+                            </button>
+                            <button class="btn btn-sm btn-danger">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+  ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>
