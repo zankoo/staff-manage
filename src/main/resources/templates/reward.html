@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>首页</title>
+    <title>奖惩列表</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
 
@@ -48,14 +48,131 @@
     </style>
 </head>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">添加奖惩</h4>
+            </div>
+            <form th:action="@{/reward/add}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" name="userId" th:value="${session.loginUser.getId()}">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputName">姓名</label>
+                        <div class="col-sm-8">
+                            <input name="empId" id="inputName" type="text" class="form-control"
+                                   placeholder="请输入员工姓名">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputReward">奖惩</label>
+                        <div class="col-sm-8">
+                            <input name="bonus" id="inputReward" type="text" class="form-control"
+                                   placeholder="请输入奖惩">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inputReason">原因</label>
+                        <div class="col-sm-8">
+                            <textarea name="reason" id="inputReason" type="text" class="form-control"
+                                      placeholder="请输入原因"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" th:onclick="Values([[${employeeNameIdMap}]])">保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editModalLabel">修改奖惩</h4>
+            </div>
+            <form th:action="@{/reward/edit}" style="font-size: large">
+                <div class="modal-body">
+                    <input type="hidden" id="editId" name="id" value="">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editName">姓名</label>
+                        <div class="col-sm-8">
+                            <input name="empId" id="editName" type="text" class="form-control"
+                                   placeholder="请输入员工姓名">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editReward">奖惩</label>
+                        <div class="col-sm-8">
+                            <input name="bonus" id="editReward" type="text" class="form-control"
+                                   placeholder="请输入奖惩">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="editReason">原因</label>
+                        <div class="col-sm-8">
+                            <textarea name="reason" id="editReason" type="text" class="form-control"
+                                      placeholder="请输入原因"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" th:onclick="Values3([[${employeeNameIdMap}]])">修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <body>
-<div th:replace="~{components::navbar}"></div>
+<div th:replace="~{components::navbar}">
+</div>
 
 <div class="container-fluid">
     <div class="row">
         <div th:replace="~{components::sidebar(active=${'reward'})}"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            #todo
+            <h2>奖惩列表</h2>
+            <div style="margin-bottom: 10px">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#myModal">
+                    添加奖惩
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">姓名</th>
+                        <th scope="col">奖惩</th>
+                        <th scope="col">原因</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-sm">
+                    <tr th:each="emp:${rewards}">
+                        <th scope="row" th:text="${employees.get(emp.getEmpId()).getName()}"></th>
+                        <td th:text="${emp.getBonus()}"></td>
+                        <td th:text="${emp.getReason()}"></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                    data-toggle="modal" data-target="#editModal"
+                                    th:onclick="Values2([[${emp}]],[[${employees}]])">编辑
+                            </button>
+                            <a class="btn btn-sm btn-danger" th:href="@{/reward/delete/{id}(id=${emp.getId()})}">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
 </div>
@@ -63,48 +180,28 @@
 <!-- Bootstrap core JavaScript
   ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+<script type=" text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
 <script>
-    feather.replace()
-</script>
+    function Values(nameIdMap) {
+        let inputName = $("#inputName");
+        inputName.val(nameIdMap[inputName.val()]);
+    }
 
-<!-- Graphs -->
-<script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
+    function Values2(reward, employeeMap) {
+        $("#editId").val(reward.id);
+        $("#editName").val(employeeMap[reward.empId].name);
+        console.log(employeeMap[reward.empId].name);
+        $("#editReward").val(reward.bonus);
+        $("#editReason").val(reward.reason);
+    }
 
+    function Values3(nameIdMap) {
+        let editName = $("#editName");
+        editName.val(nameIdMap[editName.val()]);
+    }
+</script>
 
 </body>
 

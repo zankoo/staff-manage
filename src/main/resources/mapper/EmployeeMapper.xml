@@ -1,157 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.kokoda.demo.mapper.EmployeeMapper">
-  <resultMap id="BaseResultMap" type="cn.kokoda.demo.pojo.Employee">
-    <!--@mbg.generated-->
-    <!--@Table employee-->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="gender" jdbcType="BOOLEAN" property="gender" />
-    <result column="birthday" jdbcType="DATE" property="birthday" />
-    <result column="salary" jdbcType="INTEGER" property="salary" />
-    <result column="bonus" jdbcType="INTEGER" property="bonus" />
-    <result column="depart_id" jdbcType="INTEGER" property="departId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, user_id, email, gender, birthday, salary, bonus, depart_id, `name`
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from employee
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from employee
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kokoda.demo.pojo.Employee" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into employee (user_id, email, gender, 
-      birthday, salary, bonus, 
-      depart_id, `name`)
-    values (#{userId,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN}, 
-      #{birthday,jdbcType=DATE}, #{salary,jdbcType=INTEGER}, #{bonus,jdbcType=INTEGER}, 
-      #{departId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.kokoda.demo.pojo.Employee" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into employee
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="gender != null">
-        gender,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="salary != null">
-        salary,
-      </if>
-      <if test="bonus != null">
-        bonus,
-      </if>
-      <if test="departId != null">
-        depart_id,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        #{gender,jdbcType=BOOLEAN},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="salary != null">
-        #{salary,jdbcType=INTEGER},
-      </if>
-      <if test="bonus != null">
-        #{bonus,jdbcType=INTEGER},
-      </if>
-      <if test="departId != null">
-        #{departId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.kokoda.demo.pojo.Employee">
-    <!--@mbg.generated-->
-    update employee
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=BOOLEAN},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="salary != null">
-        salary = #{salary,jdbcType=INTEGER},
-      </if>
-      <if test="bonus != null">
-        bonus = #{bonus,jdbcType=INTEGER},
-      </if>
-      <if test="departId != null">
-        depart_id = #{departId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.kokoda.demo.pojo.Employee">
-    <!--@mbg.generated-->
-    update employee
-    set user_id = #{userId,jdbcType=INTEGER},
-      email = #{email,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=BOOLEAN},
-      birthday = #{birthday,jdbcType=DATE},
-      salary = #{salary,jdbcType=INTEGER},
-      bonus = #{bonus,jdbcType=INTEGER},
-      depart_id = #{departId,jdbcType=INTEGER},
-      `name` = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="cn.kokoda.demo.pojo.Employee">
+        <!--@mbg.generated-->
+        <!--@Table employee-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gender" jdbcType="BOOLEAN" property="gender"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="salary" jdbcType="INTEGER" property="salary"/>
+        <result column="bonus" jdbcType="INTEGER" property="bonus"/>
+        <result column="depart_id" jdbcType="INTEGER" property="departId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, user_id, email, gender, birthday, salary, bonus, depart_id, `name`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from employee
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.kokoda.demo.pojo.Employee"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into employee (user_id, email, gender,
+                              birthday, salary, bonus,
+                              depart_id, `name`)
+        values (#{userId,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{gender,jdbcType=BOOLEAN},
+                #{birthday,jdbcType=DATE}, #{salary,jdbcType=INTEGER}, #{bonus,jdbcType=INTEGER},
+                #{departId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.kokoda.demo.pojo.Employee"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="salary != null">
+                salary,
+            </if>
+            <if test="bonus != null">
+                bonus,
+            </if>
+            <if test="departId != null">
+                depart_id,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=BOOLEAN},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="salary != null">
+                #{salary,jdbcType=INTEGER},
+            </if>
+            <if test="bonus != null">
+                #{bonus,jdbcType=INTEGER},
+            </if>
+            <if test="departId != null">
+                #{departId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.kokoda.demo.pojo.Employee">
+        <!--@mbg.generated-->
+        update employee
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=BOOLEAN},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="salary != null">
+                salary = #{salary,jdbcType=INTEGER},
+            </if>
+            <if test="bonus != null">
+                bonus = #{bonus,jdbcType=INTEGER},
+            </if>
+            <if test="departId != null">
+                depart_id = #{departId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.kokoda.demo.pojo.Employee">
+        <!--@mbg.generated-->
+        update employee
+        set user_id   = #{userId,jdbcType=INTEGER},
+            email     = #{email,jdbcType=VARCHAR},
+            gender    = #{gender,jdbcType=BOOLEAN},
+            birthday  = #{birthday,jdbcType=DATE},
+            salary    = #{salary,jdbcType=INTEGER},
+            bonus     = #{bonus,jdbcType=INTEGER},
+            depart_id = #{departId,jdbcType=INTEGER},
+            `name`    = #{name,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-<!--auto generated by MybatisCodeHelper on 2020-12-25-->
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from employee
-  </select>
+    <!--auto generated by MybatisCodeHelper on 2020-12-25-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+    </select>
 
-<!--auto generated by MybatisCodeHelper on 2020-12-26-->
-  <select id="selectAllByUserId" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from employee
-    where user_id=#{userId,jdbcType=INTEGER}
-  </select>
+    <!--auto generated by MybatisCodeHelper on 2020-12-26-->
+    <select id="selectAllByUserIdToMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2020-12-28-->
+    <select id="selectAllByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where user_id=#{userId,jdbcType=INTEGER}
+    </select>
 </mapper>

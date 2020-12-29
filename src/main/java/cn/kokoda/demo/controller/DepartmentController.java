@@ -24,7 +24,6 @@ public class DepartmentController {
     public String list(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
         List<Department> allDepartment = departmentService.getAllDepartment(user.getId());
-        System.out.println("allDepartment = " + allDepartment);
         model.addAttribute("departments", allDepartment);
         return "department";
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeService {
@@ -16,6 +17,10 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployee(int userId) {
         return employeeMapper.selectAllByUserId(userId);
+    }
+
+    public Map<Integer, Employee> getAllEmployeeMap(int userId) {
+        return employeeMapper.selectAllByUserIdToMap(userId);
     }
 
     public boolean addEmployee(Employee employee) {
